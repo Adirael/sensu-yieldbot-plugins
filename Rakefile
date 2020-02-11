@@ -6,7 +6,7 @@ RSpec::Core::RakeTask.new(:spec) do |r|
   r.pattern = FileList['**/**/*_spec.rb']
 end
 
-Rubocop::RakeTask.new
+RuboCop::RakeTask.new
 
 Rake::RDocTask.new do |rd|
   rd.rdoc_dir = 'doc/rdocs'

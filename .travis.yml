@@ -1,14 +1,18 @@
 language: ruby
 rvm:
-  - 2.0
-  - 2.1
-notifications:
-  email:
-    recipients:
-      - mattjones@yieldbot.com
-    on_success: change
-    on_failure: always
+  - 2.4.1
 
 script:
-  - 'bundle exec rake rubocop'
-  - 'bundle exec rake spec'
+  - bundle install
+
+before_deploy:
+  - git clone https://github.com/sensu/sensu-go-bonsai-asset.git --branch feature/ruby-plugin-assets bonsai
+
+deploy:
+  - provider: script
+    script: bonsai/ruby-runtime/travis-build-ruby-plugin-assets.sh sensu-plugins-yieldbot
+    skip_cleanup: true
+    on:
+      tags: true
+      all_branches: true
+      rvm: 2.4.1
